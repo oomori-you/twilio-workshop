@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 from slackclient import SlackClient
 from flask import Flask
+import twilio.twiml
 import os
 
 app = Flask(__name__)
@@ -15,8 +16,11 @@ def hello_world():
     channel="#random",
     text="Hello from Python! :tada:"
   )
-  return 'Hello World!!!'
 
+  resp = twilio.twiml.Response()
+  resp.say("Hello Monkey")
+
+  return str(resp)
 
 
 if __name__ == '__main__':
