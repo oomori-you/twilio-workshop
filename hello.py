@@ -18,7 +18,7 @@ def hello_world():
   )
 
   resp = twilio.twiml.Response()
-  resp.say("日本語にほんご")
+  resp.say(u"日本語にほんご")
 
   return str(resp)
 
