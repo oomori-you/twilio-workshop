@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-  token = os.environ["SLACK_API_KEY"]
+  token = os.environ["SLACK_API_TOKEN"]
   sc = SlackClient(token)
   sc.api_call(
     "chat.postMessage",
