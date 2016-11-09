@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from slackclient import SlackClient
-from flask import request, Flask
+from flask import request, url_for, redirect, Flask
 import twilio.twiml
 import os
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def hello_world():
 
 
 @app.route('/late/response')
-def absent():
+def late_response():
   return app.send_static_file('late-response.xml')
 
 @app.route('/absent')
@@ -39,11 +39,11 @@ def absent():
   return app.send_static_file('absent.xml')
 
 @app.route('/late')
-def absent():
+def late():
   return app.send_static_file('late.xml')
 
 @app.route('/invalid')
-def absent():
+def invalid():
   return app.send_static_file('invalid.xml')
 
 @app.route('/reception/response')
