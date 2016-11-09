@@ -29,8 +29,35 @@ def hello_world():
 
   return str(resp)
 
+
+@app.route('/late/response')
+def absent():
+  return app.send_static_file('late-response.xml')
+
+@app.route('/absent')
+def absent():
+  return app.send_static_file('absent.xml')
+
+@app.route('/late')
+def absent():
+  return app.send_static_file('late.xml')
+
+@app.route('/invalid')
+def absent():
+  return app.send_static_file('invalid.xml')
+
+@app.route('/reception/response')
+def reception_response():
+  digits = request.values.get('Digits', None)
+  if digits == 1:
+    return redirect(url_for('absent'))
+  elif digits == 2:
+    return redirect(url_for('late'))
+  else:
+    return redirect(url_for('invalid'))
+  
 @app.route('/reception')
-def root():
+def reception():
   return app.send_static_file('reception.xml')
 
 if __name__ == '__main__':

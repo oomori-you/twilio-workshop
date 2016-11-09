@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say language="ja-jp">入力された番号を認識できません。</Say>  
+  <Say language="ja-jp">通話を終了します。</Say>  
+</Response>
