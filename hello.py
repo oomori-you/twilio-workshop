@@ -29,6 +29,9 @@ def hello_world():
 
   return str(resp)
 
+@app.route('/reception')
+def root():
+  return app.send_static_file('reception.xml')
 
 if __name__ == '__main__':
     app.run()
