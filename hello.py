@@ -36,6 +36,20 @@ def late_response():
 
 @app.route('/absent')
 def absent():
+  text = ""
+  from_number = request.values.get('From', None)
+  if from_number is None:
+    text = u"{0} さんは本日欠勤です。".format("anonymous")
+  else:
+    text = u"{0} さんは本日欠勤です。".format(from_number)
+  
+  token = os.environ["SLACK_API_TOKEN"]
+  sc = SlackClient(token)
+  sc.api_call(
+    "chat.postMessage",
+    channel="#random",
+    text=text
+  )
   return app.send_static_file('absent.xml')
 
 @app.route('/late')
