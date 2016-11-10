@@ -32,6 +32,23 @@ def hello_world():
 
 @app.route('/late/response')
 def late_response():
+  text = ""
+  from_number = request.values.get('From', None)
+  digits = (int)(request.values.get('Digits', None))
+  if from_number is None:
+    text += u"{0} さんは本日遅刻です。".format("anonymous")
+    text += u"出社予定時刻は {0} です。\n".format(digit)
+  else:
+    text += u"{0} さんは本日遅刻です。\n".format(from_number)
+    text += u"出社予定時刻は {0} です。\n".format(digit)
+  
+  token = os.environ["SLACK_API_TOKEN"]
+  sc = SlackClient(token)
+  sc.api_call(
+    "chat.postMessage",
+    channel="#random",
+    text=text
+  )
   return app.send_static_file('late-response.xml')
 
 @app.route('/absent')
