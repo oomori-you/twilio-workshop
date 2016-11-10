@@ -48,7 +48,7 @@ def invalid():
 
 @app.route('/reception/response')
 def reception_response():
-  digits = request.values.get('Digits', None)
+  digits = (int)(request.values.get('Digits', None))
   if digits == 1:
     return redirect(url_for('absent'))
   elif digits == 2:
