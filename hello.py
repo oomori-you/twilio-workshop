@@ -17,13 +17,13 @@ def late_response():
   text = ""
   from_number = request.values.get('From', None)
   digits = (str)(request.values.get('Digits', None))
-  t = datetime.datetime.strptime(2359, '%H%M')
+  t = datetime.datetime.strptime(digits, '%H%M')
   if from_number is None:
     text += u"{0} さんは本日遅刻です。".format("anonymous")
-    text += u"出社予定時刻は {0}:{1} です。\n".format(t.hour, t.minute)
+    text += u"出社予定時刻は `{0}:{1}` です。\n".format(t.hour, t.minute)
   else:
     text += u"{0} さんは本日遅刻です。\n".format(from_number)
-    text += u"出社予定時刻は {0}:{1} です。\n".format(t.hour, t.minute)
+    text += u"出社予定時刻は `{0}:{1}` です。\n".format(t.hour, t.minute)
   
   token = os.environ["SLACK_API_TOKEN"]
   sc = SlackClient(token)
