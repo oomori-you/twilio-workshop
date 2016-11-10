@@ -4,43 +4,26 @@ from slackclient import SlackClient
 from flask import request, url_for, redirect, Flask
 import twilio.twiml
 import os
+import datetime
+
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-  from_number = request.values.get('From', None)
-  
-  token = os.environ["SLACK_API_TOKEN"]
-  text = ""
-  if from_number is None:
-    text = "Hello anonymous :tada:"
-  else:
-    # Greet the caller by name
-    text = "Hello {0} :tada:".format(from_number)
-  sc = SlackClient(token)
-  sc.api_call(
-    "chat.postMessage",
-    channel="#random",
-    text=text
-  )
-
-  resp = twilio.twiml.Response()
-  resp.say(u"日本語にほんご", language="ja-jp")
-
-  return str(resp)
-
+  return "Hello World!!!"
 
 @app.route('/late/response')
 def late_response():
   text = ""
   from_number = request.values.get('From', None)
-  digits = (int)(request.values.get('Digits', None))
+  digits = (str)(request.values.get('Digits', None))
+  t = datetime.datetime.strptime(2359, '%H%M')
   if from_number is None:
     text += u"{0} さんは本日遅刻です。".format("anonymous")
-    text += u"出社予定時刻は {0} です。\n".format(digits)
+    text += u"出社予定時刻は {0}:{1} です。\n".format(t.hour, t.minute)
   else:
     text += u"{0} さんは本日遅刻です。\n".format(from_number)
-    text += u"出社予定時刻は {0} です。\n".format(digits)
+    text += u"出社予定時刻は {0}:{1} です。\n".format(t.hour, t.minute)
   
   token = os.environ["SLACK_API_TOKEN"]
   sc = SlackClient(token)
