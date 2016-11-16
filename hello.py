@@ -14,42 +14,19 @@ def hello_world():
 
 @app.route('/late/response')
 def late_response():
-  text = ""
   from_number = request.values.get('From', None)
   digits = (str)(request.values.get('Digits', None))
   t = datetime.datetime.strptime(digits, '%H%M')
-  if from_number is None:
-    text += u"{0} さんは本日遅刻です。".format("anonymous")
-    text += u"出社予定時刻は `{0}:{1}` です。\n".format(t.hour, t.minute)
-  else:
-    text += u"{0} さんは本日遅刻です。\n".format(from_number)
-    text += u"出社予定時刻は `{0}:{1}` です。\n".format(t.hour, t.minute)
-  
-  token = os.environ["SLACK_API_TOKEN"]
-  sc = SlackClient(token)
-  sc.api_call(
-    "chat.postMessage",
-    channel="#random",
-    text=text
-  )
+  text = u"`{0}` さんは本日遅刻です。".format(number_to_name(from_number))
+  text += u"出社予定時刻は `{0}:{1}` です。\n".format(t.hour, t.minute)
+  tweet(text);
   return app.send_static_file('late-response.xml')
 
 @app.route('/absent')
 def absent():
-  text = ""
   from_number = request.values.get('From', None)
-  if from_number is None:
-    text = u"{0} さんは本日欠勤です。".format("anonymous")
-  else:
-    text = u"{0} さんは本日欠勤です。".format(from_number)
-  
-  token = os.environ["SLACK_API_TOKEN"]
-  sc = SlackClient(token)
-  sc.api_call(
-    "chat.postMessage",
-    channel="#random",
-    text=text
-  )
+  text = u"`{0}` さんは本日欠勤です。".format(number_to_name(from_number))
+  tweet(text);
   return app.send_static_file('absent.xml')
 
 @app.route('/late')
@@ -73,6 +50,21 @@ def reception_response():
 @app.route('/reception')
 def reception():
   return app.send_static_file('reception.xml')
+
+def tweet(text):
+  token = os.environ["SLACK_API_TOKEN"]
+  sc = SlackClient(token)
+  sc.api_call(
+    "chat.postMessage",
+    channel="#random",
+    text=text
+  )
+
+def number_to_name(number):
+  dic = {
+    u"+819029551295": u"大森 雄佑"
+  }
+  return dic.get(number, 'anonymous')
 
 if __name__ == '__main__':
     app.run()
