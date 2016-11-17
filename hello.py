@@ -17,14 +17,14 @@ def hello_world():
 def call():
   account = os.environ["TWILIO_ACCOUNT_ID"]
   token = os.environ["TWILIO_API_TOKEN"]
-  f = os.environ["TWOLIO_PHONE_NUMBER"]
+  f = os.environ["TWILIO_PHONE_NUMBER"]
   to = request.values.get('to', None)
   to = "+81" + to[1:-1]
   client = TwilioRestClient(account, token)
   call = client.calls.create(
     to=to,
     from_=f,
-    url=url_for('/call/response')
+    url=url_for('call_response')
   )
   print(call.sid)
 
@@ -87,4 +87,4 @@ def number_to_name(number):
   return dic.get(number, 'anonymous')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
