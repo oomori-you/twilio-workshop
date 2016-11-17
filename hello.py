@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 from slackclient import SlackClient
 from flask import request, url_for, redirect, Flask
+from twilio.rest import TwilioRestClient
 import twilio.twiml
 import os
 import datetime
@@ -11,6 +12,25 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
   return "Hello World!!!"
+
+@app.route('/call')
+def call():
+  account = os.environ["TWILIO_ACCOUNT_ID"]
+  token = os.environ["TWILIO_API_TOKEN"]
+  f = os.environ["TWOLIO_PHONE_NUMBER"]
+  to = request.values.get('to', None)
+  to = "+81" + to[1:-1]
+  client = TwilioRestClient(account, token)
+  call = client.calls.create(
+    to=to,
+    from_=f,
+    url=url_for('/call/response')
+  )
+  print(call.sid)
+
+@app.route('/call/response')
+def call_response():
+  return app.send_static_file('call.xml')
 
 @app.route('/late/response')
 def late_response():
