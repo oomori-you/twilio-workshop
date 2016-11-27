@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Gather action="https://twilio-ivr.herokuapp.com/late/response" method="GET" finishOnKey="#" timeout="3" numDigits="4">
+  <Gather action="https://twilio-ivr.herokuapp.com/late/answer" method="GET" finishOnKey="#" timeout="3" numDigits="4">
     <Say language="ja-jp">出社予定時刻を四桁で入力して下さい。</Say>  
   </Gather>
 </Response>

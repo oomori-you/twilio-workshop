@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Gather action="https://twilio-ivr.herokuapp.com/reception/response" method="GET" finishOnKey="#" timeout="3">
+  <Gather action="https://twilio-ivr.herokuapp.com/reception/answer" method="GET" finishOnKey="#" timeout="3">
     <Say language="ja-jp">勤怠管理連絡受付です。</Say>  
     <Say language="ja-jp">欠勤の連絡のかたは一番。</Say>  
     <Say language="ja-jp">遅刻の連絡のかたは二番を押して下さい。</Say>  
