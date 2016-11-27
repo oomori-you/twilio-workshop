@@ -16,12 +16,10 @@ def call():
   token = os.environ["TWILIO_AUTH_TOKEN"]
   f = os.environ["TWILIO_PHONE_NUMBER"]
   to = request.values.get('to', None)
-  to = "+81" + to[1:-1]
+  to = "+81" + to.lstrip('0')
   
-  print app.config
-  print request.remote_addr
-  print request.remote_addr + url_for('call_response')
-  print request
+  print request.url_root + url_for('call_response')
+  
   client = TwilioRestClient(account, token)
   call = client.calls.create(
     to=to,
