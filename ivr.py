@@ -13,27 +13,6 @@ app = Flask(__name__)
 def hello_world():
   return "Hello World!!!"
 
-@app.route('/call', methods=['GET', 'POST'])
-def call():
-  account = os.environ["TWILIO_ACCOUNT_ID"]
-  token = os.environ["TWILIO_API_TOKEN"]
-  f = os.environ["TWILIO_PHONE_NUMBER"]
-  to = request.values.get('to', None)
-  to = "+81" + to[1:-1]
-  print app.config['SERVER_NAME']
-  return "hoge"
-  #client = TwilioRestClient(account, token)
-  #call = client.calls.create(
-  #  to=to,
-  #  from_=f,
-  #  url=SERVER_NAME+url_for('call_response')
-  #)
-  #print(call.sid)
-
-@app.route('/call/response', methods=['GET', 'POST'])
-def call_response():
-  return app.send_static_file('call.xml')
-
 @app.route('/late/response', methods=['GET', 'POST'])
 def late_response():
   from_number = request.values.get('From', None)
