@@ -2,8 +2,6 @@
 # -*- coding:utf-8 -*-
 from slackclient import SlackClient
 from flask import request, url_for, redirect, Flask
-from twilio.rest import TwilioRestClient
-import twilio.twiml
 import os
 import datetime
 
@@ -13,6 +11,20 @@ app = Flask(__name__)
 def hello_world():
   return "Hello World!!!"
 
+@app.route('/reception', methods=['GET', 'POST'])
+def reception():
+  return app.send_static_file('reception.xml')
+
+@app.route('/reception/response', methods=['GET', 'POST'])
+def reception_response():
+  digits = (int)(request.values.get('Digits', None))
+  if digits == 1:
+    return redirect(url_for('absent'))
+  elif digits == 2:
+    return redirect(url_for('late'))
+  else:
+    return redirect(url_for('invalid'))
+  
 @app.route('/late/response', methods=['GET', 'POST'])
 def late_response():
   from_number = request.values.get('From', None)
@@ -22,6 +34,8 @@ def late_response():
   text += u"出社予定時刻は `{0}:{1}` です。\n".format(t.hour, t.minute)
   tweet(text);
   return app.send_static_file('late-response.xml')
+
+
 
 @app.route('/absent', methods=['GET', 'POST'])
 def absent():
@@ -38,19 +52,6 @@ def late():
 def invalid():
   return app.send_static_file('invalid.xml')
 
-@app.route('/reception/response', methods=['GET', 'POST'])
-def reception_response():
-  digits = (int)(request.values.get('Digits', None))
-  if digits == 1:
-    return redirect(url_for('absent'))
-  elif digits == 2:
-    return redirect(url_for('late'))
-  else:
-    return redirect(url_for('invalid'))
-  
-@app.route('/reception', methods=['GET', 'POST'])
-def reception():
-  return app.send_static_file('reception.xml')
 
 def tweet(text):
   token = os.environ["SLACK_API_TOKEN"]

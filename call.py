@@ -18,8 +18,6 @@ def call():
   to = request.values.get('to', None)
   to = "+81" + to.lstrip('0')
   
-  print request.url_root + url_for('call_response')
-  
   client = TwilioRestClient(account, token)
   call = client.calls.create(
     to=to,
