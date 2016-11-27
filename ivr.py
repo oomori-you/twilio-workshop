@@ -9,19 +9,19 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
-  return "Hello World!!!"
+  return "Hello IVR!!!"
 
 @app.route('/reception/ask', methods=['GET', 'POST'])
-def reception():
+def reception_ask():
   return app.send_static_file('reception-ask.xml')
 
 @app.route('/reception/answer', methods=['GET', 'POST'])
-def reception_response():
+def reception_answer():
   digits = (int)(request.values.get('Digits', None))
   if digits == 1:
     return redirect(url_for('absent'))
   elif digits == 2:
-    return redirect(url_for('late/ask'))
+    return redirect(url_for('late_ask'))
   else:
     return redirect(url_for('invalid'))
 
@@ -33,11 +33,11 @@ def absent():
   return app.send_static_file('absent.xml')
 
 @app.route('/late/ask', methods=['GET', 'POST'])
-def late():
+def late_ask():
   return app.send_static_file('late-ask.xml')
 
 @app.route('/late/answer', methods=['GET', 'POST'])
-def late_response():
+def late_answer():
   from_number = request.values.get('From', None)
   digits = (str)(request.values.get('Digits', None))
   t = datetime.datetime.strptime(digits, '%H%M')
