@@ -19,11 +19,14 @@ def call():
   to = "+81" + to[1:-1]
   
   print app.config
+  print request.remote_addr
+  print request.remote_addr + url_for('call_response')
+  
   client = TwilioRestClient(account, token)
   call = client.calls.create(
     to=to,
     from_=f,
-    url=SERVER_NAME+url_for('call_response')
+    url=(request.remote_addr + url_for('call_response'))
   )
   return call.sid
 
