@@ -9,30 +9,32 @@ import datetime
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def hello_world():
   return "Hello World!!!"
 
-@app.route('/call')
+@app.route('/call', methods=['GET', 'POST'])
 def call():
   account = os.environ["TWILIO_ACCOUNT_ID"]
   token = os.environ["TWILIO_API_TOKEN"]
   f = os.environ["TWILIO_PHONE_NUMBER"]
   to = request.values.get('to', None)
   to = "+81" + to[1:-1]
-  client = TwilioRestClient(account, token)
-  call = client.calls.create(
-    to=to,
-    from_=f,
-    url=url_for('call_response')
-  )
-  print(call.sid)
+  print app.config['SERVER_NAME']
+  return "hoge"
+  #client = TwilioRestClient(account, token)
+  #call = client.calls.create(
+  #  to=to,
+  #  from_=f,
+  #  url=SERVER_NAME+url_for('call_response')
+  #)
+  #print(call.sid)
 
-@app.route('/call/response')
+@app.route('/call/response', methods=['GET', 'POST'])
 def call_response():
   return app.send_static_file('call.xml')
 
-@app.route('/late/response')
+@app.route('/late/response', methods=['GET', 'POST'])
 def late_response():
   from_number = request.values.get('From', None)
   digits = (str)(request.values.get('Digits', None))
@@ -42,22 +44,22 @@ def late_response():
   tweet(text);
   return app.send_static_file('late-response.xml')
 
-@app.route('/absent')
+@app.route('/absent', methods=['GET', 'POST'])
 def absent():
   from_number = request.values.get('From', None)
   text = u"`{0}` さんは本日欠勤です。".format(number_to_name(from_number))
   tweet(text);
   return app.send_static_file('absent.xml')
 
-@app.route('/late')
+@app.route('/late', methods=['GET', 'POST'])
 def late():
   return app.send_static_file('late.xml')
 
-@app.route('/invalid')
+@app.route('/invalid', methods=['GET', 'POST'])
 def invalid():
   return app.send_static_file('invalid.xml')
 
-@app.route('/reception/response')
+@app.route('/reception/response', methods=['GET', 'POST'])
 def reception_response():
   digits = (int)(request.values.get('Digits', None))
   if digits == 1:
@@ -67,7 +69,7 @@ def reception_response():
   else:
     return redirect(url_for('invalid'))
   
-@app.route('/reception')
+@app.route('/reception', methods=['GET', 'POST'])
 def reception():
   return app.send_static_file('reception.xml')
 
