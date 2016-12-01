@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say language="ja-jp">Twilio勉強会</Say>  
+  <Say language="ja-jp" voice="man">生麦生米生卵</Say>  
+  <Say language="ja-jp" voice="woman">隣の客はよく柿食う客だ</Say>  
+  <Say language="ja-jp" voice="man">東京特許許可局</Say>  
 </Response>
