@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-  <Say language="ja-jp" voice="man">生麦生米生卵</Say>  
-  <Say language="ja-jp" voice="alice">隣の客はよく柿食う客だ</Say>  
-  <Say language="ja-jp" voice="man">東京特許許可局</Say>  
+  <Say language="ja-Jp" voice="man">生麦生米生卵</Say>  
+  <Say language="ja-Jp" voice="man">彼女は海岸で貝殻を売っています</Say>  
+  <Say language="en-US" voice="alice">She sells sea shells by the seashore</Say>  
 </Response>
