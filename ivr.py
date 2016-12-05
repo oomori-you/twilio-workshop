@@ -9,7 +9,27 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
-  return "Hello IVR!!!"
+  return "Hello Master!!!"
+
+@app.route('/call', methods=['GET', 'POST'])
+def call():
+  account = os.environ["TWILIO_SID"]
+  token = os.environ["TWILIO_AUTH_TOKEN"]
+  f = os.environ["TWILIO_PHONE_NUMBER"]
+  to = request.values.get('to', None)
+  to = "+81" + to.lstrip('0')
+  
+  client = TwilioRestClient(account, token)
+  call = client.calls.create(
+    to=to,
+    from_=f,
+    url=(request.url_root + url_for('call_response'))
+  )
+  return call.sid
+
+@app.route('/call/response', methods=['GET', 'POST'])
+def call_response():
+  return app.send_static_file('call.xml')
 
 @app.route('/reception/ask', methods=['GET', 'POST'])
 def reception_ask():
