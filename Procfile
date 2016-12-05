@@ -1,1 +1,1 @@
-web: gunicorn call:app --log-file -
+web: gunicorn ivr:app --log-file -
