@@ -4,10 +4,9 @@ twilio勉強会
 
 ###### 出力
 * xxxxx: 
-  * xxxxx: array
+  * headers: array
     * xxxx: string　**ああああああああああ**
     * xxxxx: string　**あああああああ**  
-　　xxxx| xxxxx | xxxxxx 
     * xxxxx: 　**ああああ**
       * yyyy: integer　**あああああ**
       * yyyy: integer　**ああああああ**
